@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">My Application</string>
+
+        <string name="termTitle">Term Title</string>
+        <string name="termStartDate">Term Start Date</string>
+        <string name="termEndDate">Term End Date</string>
+        <string name="saveTermButton">Save Term</string>
+
+    </resources>
