@@ -14,9 +14,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Repository {
-    private TermsDao mTermsDao;
-    private CoursesDao mCoursesDao;
-    private AssessmentsDao mAssessmentsDao;
+    private final TermsDao mTermsDao;
+    private final CoursesDao mCoursesDao;
+    private final AssessmentsDao mAssessmentsDao;
 
     private List<Terms> mAllTerms;
     private List<Courses> mAllCourses;

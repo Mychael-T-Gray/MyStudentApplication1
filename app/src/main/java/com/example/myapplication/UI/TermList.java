@@ -17,9 +17,6 @@ import android.view.View;
 import com.example.myapplication.Database.ScheduleDatabaseBuilder;
 import com.example.myapplication.R;
 import com.example.myapplication.entities.Terms;
-import com.example.myapplication.Database.ScheduleDatabaseBuilder;
-import com.example.myapplication.R;
-import com.example.myapplication.entities.Terms;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -55,75 +52,69 @@ public class TermList extends AppCompatActivity {
         saveTermButton.setText(saveTermButtonText);
 
 
-        saveTermButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // get the text from each EditText
-                String termTitleInputText = termTitleInput.getText().toString();
-                String termStartInputText = termStartInput.getText().toString();
-                String termEndInputText = termEndInput.getText().toString();
+        saveTermButton.setOnClickListener(view -> {
+            // get the text from each EditText
+            String termTitleInputText = termTitleInput.getText().toString();
+            String termStartInputText = termStartInput.getText().toString();
+            String termEndInputText = termEndInput.getText().toString();
 
-                //Terms object to insert into the database
-                Terms newTerm = new Terms(0, termTitleInputText, termStartInputText, termEndInputText);
+            //Terms object to insert into the database
+            Terms newTerm = new Terms(0, termTitleInputText, termStartInputText, termEndInputText);
 
 
-                // insert the new term into the database
-                ScheduleDatabaseBuilder db = ScheduleDatabaseBuilder.getDatabase(TermList.this);
-                db.termsDao().insert(newTerm);
+            // insert the new term into the database
+            ScheduleDatabaseBuilder db = ScheduleDatabaseBuilder.getDatabase(TermList.this);
+            db.termsDao().insert(newTerm);
 
-                // update the termDisplayList to reflect the new state of the database
-                List<Terms> allTerms = db.termsDao().getAllTerms();
-                LinearLayout linearLayoutTerm = findViewById(R.id.linearLayoutTermDisplay);
-                linearLayoutTerm.removeAllViews();
-                termDisplayList.clear();
-                for (Terms term : allTerms) {
-                    TextView newTextView = new TextView(TermList.this);
-                    String finalTermDisplayText = term.getTermTitle() + " " + term.getTermStart() + " " + term.getTermEnd();
-                    newTextView.setText(finalTermDisplayText);
-                    newTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-                    linearLayoutTerm.addView(newTextView);
-                    termDisplayList.add(newTextView);
-                }
-
-                // create a new TextView to display the term data
+            // update the termDisplayList to reflect the new state of the database
+            List<Terms> allTerms = db.termsDao().getAllTerms();
+            LinearLayout linearLayoutTerm = findViewById(R.id.linearLayoutTermDisplay);
+            linearLayoutTerm.removeAllViews();
+            termDisplayList.clear();
+            for (Terms term : allTerms) {
                 TextView newTextView = new TextView(TermList.this);
-                String finalTermDisplayText = termTitleInputText + " " + termStartInputText + " " + termEndInputText;
+                String finalTermDisplayText = term.getTermTitle() + " " + term.getTermStart() + " " + term.getTermEnd();
                 newTextView.setText(finalTermDisplayText);
                 newTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-
-                // add the new TextView to the LinearLayout
-
                 linearLayoutTerm.addView(newTextView);
-
-                // add the new TextView to the termDisplayList
                 termDisplayList.add(newTextView);
-
-                // concatenate the text of each TextView in termDisplayList
-                StringBuilder builder = new StringBuilder();
-                for (TextView textView : termDisplayList) {
-                    builder.append(textView.getText().toString()).append("\n");
-                }
-                String allTermDisplayText = builder.toString();
-
-                // clear the EditText fields
-                termTitleInput.setText("");
-                termStartInput.setText("");
-                termEndInput.setText("");
-
-
-                // hide the soft keyboard
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
+
+            // create a new TextView to display the term data
+            TextView newTextView = new TextView(TermList.this);
+            String finalTermDisplayText = termTitleInputText + " " + termStartInputText + " " + termEndInputText;
+            newTextView.setText(finalTermDisplayText);
+            newTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+
+            // add the new TextView to the LinearLayout
+
+            linearLayoutTerm.addView(newTextView);
+
+            // add the new TextView to the termDisplayList
+            termDisplayList.add(newTextView);
+
+            // concatenate the text of each TextView in termDisplayList
+            StringBuilder builder = new StringBuilder();
+            for (TextView textView : termDisplayList) {
+                builder.append(textView.getText().toString()).append("\n");
+            }
+            String allTermDisplayText = builder.toString();
+
+            // clear the EditText fields
+            termTitleInput.setText("");
+            termStartInput.setText("");
+            termEndInput.setText("");
+
+
+            // hide the soft keyboard
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         });
 
         FloatingActionButton fab = findViewById(R.id.termListFloatingActionButton);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(TermList.this, CourseList.class);
-                startActivity(intent);
-            }
+        fab.setOnClickListener(view -> {
+            Intent intent = new Intent(TermList.this, CourseList.class);
+            startActivity(intent);
         });
 
     }
