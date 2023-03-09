@@ -46,7 +46,8 @@ public class Repository {
 
     public void insert(Terms terms) {
         dataBaseExecutor.execute(() -> {
-            mAllTerms = mTermsDao.getAllTerms();
+          //  mAllTerms = mTermsDao.getAllTerms();
+            mTermsDao.insert(terms);
         });
         try {
             Thread.sleep(1000);

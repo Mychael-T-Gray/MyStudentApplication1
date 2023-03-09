@@ -16,7 +16,7 @@ public class TermDetails extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term_details);
-        /*
+       /*
         final String termTitle = getString(R.string.termTitle);
         final String termStartDate = getString(R.string.termStartDate);
         final String termEndDate = getString(R.string.termEndDate);
@@ -97,12 +97,12 @@ public class TermDetails extends AppCompatActivity {
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         });
-*/
+
         FloatingActionButton fab = findViewById(R.id.termListFloatingActionButton);
         fab.setOnClickListener(view -> {
             Intent intent = new Intent(TermDetails.this, CourseList.class);
             startActivity(intent);
-        });
+        });*/
 
     }
 
