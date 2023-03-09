@@ -20,7 +20,7 @@ public class CourseList extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CourseList.this, TermList.class);
+                Intent intent = new Intent(CourseList.this, TermDetails.class);
                 startActivity(intent);
             }
         });
