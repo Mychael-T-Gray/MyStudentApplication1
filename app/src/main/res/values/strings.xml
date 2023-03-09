@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Student Scheduling</string>
 
         <string name="termTitle">Term Title</string>
         <string name="termStartDate">Term Start Date</string>
