@@ -55,7 +55,7 @@ Repository repository;
                 //Toast.makeText(this, "Term is saved",Toast.LENGTH_LONG).show();
                 }
                 else{
-                    terms= new Terms(0,editTermTitle.getText().toString(),editTermStart.getText().toString(), editTermEnd.getText().toString());
+                    terms= new Terms(id,editTermTitle.getText().toString(),editTermStart.getText().toString(), editTermEnd.getText().toString());
 
                     repository.update(terms);
 
