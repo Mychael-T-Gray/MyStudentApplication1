@@ -33,6 +33,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermListViewHo
                     intent.putExtra("termEnd", currentTerm.getTermEnd());
                     context.startActivity(intent);
 
+
                 }
             });
         }
