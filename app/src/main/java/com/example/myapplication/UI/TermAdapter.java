@@ -26,13 +26,15 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermListViewHo
                 public void onClick(View view) {
                     int position = getAdapterPosition();
                     final Terms currentTerm = mTerms.get(position);
+
                     Intent intent = new Intent(context, TermDetails.class);
 
-                    intent.putExtra("termId", currentTerm.getTermId());
+                    intent.putExtra("id", currentTerm.getTermId());
                     intent.putExtra("termTitle", currentTerm.getTermTitle());
                     intent.putExtra("termStart", currentTerm.getTermStart());
                     intent.putExtra("termEnd", currentTerm.getTermEnd());
                     context.startActivity(intent);
+
 
 
                 }
@@ -59,7 +61,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermListViewHo
     public void onBindViewHolder(@NonNull TermAdapter.TermListViewHolder holder, int position) {
         if(mTerms!=null){
             Terms current = mTerms.get(position);
-            int termId = current.getTermId();
+
             String termTitle = current.getTermTitle();
             String termStart = current.getTermStart();
             String termEnd = current.getTermEnd();

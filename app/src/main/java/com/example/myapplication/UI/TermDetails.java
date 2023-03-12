@@ -50,7 +50,7 @@ Repository repository;
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(id==-1){
+                if(id == -1){
                 terms= new Terms(0,editTermTitle.getText().toString(),editTermStart.getText().toString(), editTermEnd.getText().toString());
                 repository.insert(terms);
                 //Toast.makeText(this, "Term is saved",Toast.LENGTH_LONG).show();
