@@ -39,7 +39,7 @@
         </activity>
         <activity
             android:name=".UI.TermList"
-            android:exported="true"
+            android:exported="false"
             android:label="Term List">
             <meta-data
                 android:name="android.app.lib_name"
@@ -63,7 +63,7 @@
         </activity>
         <activity
             android:name=".UI.TermDetails"
-            android:exported="true"
+            android:exported="false"
             android:label="Term Details"
             android:parentActivityName=".UI.TermList">
             <meta-data

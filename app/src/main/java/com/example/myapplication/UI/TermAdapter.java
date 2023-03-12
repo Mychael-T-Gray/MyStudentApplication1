@@ -29,7 +29,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermListViewHo
 
                     Intent intent = new Intent(context, TermDetails.class);
 
-                    intent.putExtra("id", currentTerm.getTermId());
+                    intent.putExtra("termId", currentTerm.getTermId());
                     intent.putExtra("termTitle", currentTerm.getTermTitle());
                     intent.putExtra("termStart", currentTerm.getTermStart());
                     intent.putExtra("termEnd", currentTerm.getTermEnd());
@@ -59,7 +59,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermListViewHo
 
     @Override
     public void onBindViewHolder(@NonNull TermAdapter.TermListViewHolder holder, int position) {
-        if(mTerms!=null){
+        if(mTerms!=null && !mTerms.isEmpty()){
             Terms current = mTerms.get(position);
 
             String termTitle = current.getTermTitle();
@@ -77,9 +77,13 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermListViewHo
         }
     }
 
-    @Override
+   /* @Override
     public int getItemCount() {
         return mTerms.size();
+    }*/
+    @Override
+    public int getItemCount() {
+        return mTerms == null ? 0 : mTerms.size();
     }
 
     public void setTerms(List<Terms> terms){

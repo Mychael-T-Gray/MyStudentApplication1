@@ -44,39 +44,23 @@ public class Repository {
         return mAllTerms;
     }
 
-    public void insert(Terms terms) {
-        dataBaseExecutor.execute(() -> {
-          //  mAllTerms = mTermsDao.getAllTerms();
-            mTermsDao.insert(terms);
-        });
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
+   public void insert(Terms terms) {
+       dataBaseExecutor.execute(() -> {
+           mTermsDao.insert(terms);
+       });
+   }
     public void update(Terms terms) {
         dataBaseExecutor.execute(() -> {
-            mAllTerms = mTermsDao.getAllTerms();
+            mTermsDao.update(terms);
         });
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     public void delete(Terms terms) {
         dataBaseExecutor.execute(() -> {
-            mAllTerms = mTermsDao.getAllTerms();
+            mTermsDao.delete(terms);
         });
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
+
 
     public List<Courses> getmAllCourses() {
         dataBaseExecutor.execute(() -> {

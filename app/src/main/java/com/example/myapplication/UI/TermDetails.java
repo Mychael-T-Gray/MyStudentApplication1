@@ -23,7 +23,7 @@ EditText editTermEnd;
 String termTitle;
 String termStart;
 String termEnd;
-int id;
+int termId;
 Terms terms;
 Repository repository;
 
@@ -36,7 +36,7 @@ Repository repository;
         editTermStart = findViewById(R.id.termDetailsTermStartDateEditText);
         editTermEnd = findViewById(R.id.termDetailsTermEndDateEditText);
 
-        id = getIntent().getIntExtra("id",-1);
+        termId = getIntent().getIntExtra("termId",-1);
         termTitle = getIntent().getStringExtra("termTitle");
         termStart = getIntent().getStringExtra("termStart");
         termEnd = getIntent().getStringExtra("termEnd");
@@ -50,13 +50,13 @@ Repository repository;
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(id == -1){
+                if(termId == -1 ){
                 terms= new Terms(0,editTermTitle.getText().toString(),editTermStart.getText().toString(), editTermEnd.getText().toString());
                 repository.insert(terms);
                 //Toast.makeText(this, "Term is saved",Toast.LENGTH_LONG).show();
                 }
                 else{
-                    terms= new Terms(id,editTermTitle.getText().toString(),editTermStart.getText().toString(), editTermEnd.getText().toString());
+                    terms= new Terms(termId,editTermTitle.getText().toString(),editTermStart.getText().toString(), editTermEnd.getText().toString());
 
                     repository.update(terms);
 
