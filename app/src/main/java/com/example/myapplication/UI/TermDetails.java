@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,7 +36,7 @@ Repository repository;
         editTermStart = findViewById(R.id.termDetailsTermStartDateEditText);
         editTermEnd = findViewById(R.id.termDetailsTermEndDateEditText);
 
-        id = getIntent().getIntExtra("termId",-1);
+        id = getIntent().getIntExtra("id",-1);
         termTitle = getIntent().getStringExtra("termTitle");
         termStart = getIntent().getStringExtra("termStart");
         termEnd = getIntent().getStringExtra("termEnd");
@@ -61,6 +62,8 @@ Repository repository;
 
                    //Toast.makeText(this, "Term is updated",Toast.LENGTH_LONG).show();
                 }
+                Intent intent = new Intent( TermDetails.this, TermList.class);
+                startActivity(intent);
             }
 
         });
