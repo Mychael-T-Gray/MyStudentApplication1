@@ -55,7 +55,7 @@ Repository repository;
         final CourseAdapter courseAdapter = new CourseAdapter(this);
         recyclerView.setAdapter(courseAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        courseAdapter.setCourses(repository.getmAllCourses());
 
 
 

@@ -36,11 +36,7 @@ public class Repository {
         dataBaseExecutor.execute(() -> {
             mAllTerms = mTermsDao.getAllTerms();
         });
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         return mAllTerms;
     }
 
@@ -66,11 +62,6 @@ public class Repository {
         dataBaseExecutor.execute(() -> {
             mAllCourses = mCoursesDao.getAllCourses();
         });
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         return mAllCourses;
     }
 
@@ -78,33 +69,19 @@ public class Repository {
         dataBaseExecutor.execute(() -> {
             mAllCourses = mCoursesDao.getAllCourses();
         });
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     public void update(Courses courses) {
         dataBaseExecutor.execute(() -> {
             mAllCourses = mCoursesDao.getAllCourses();
         });
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     public void delete(Courses courses) {
         dataBaseExecutor.execute(() -> {
             mAllCourses = mCoursesDao.getAllCourses();
         });
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
     }
 
 
