@@ -31,4 +31,15 @@
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp" />
+
+    <TextView
+        android:id="@+id/textViewAddTerm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Term"
+        app:layout_constraintBottom_toTopOf="@id/termListFloatingActionButton"
+        app:layout_constraintLeft_toLeftOf="@id/termListFloatingActionButton"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="323dp"
+        tools:layout_editor_absoluteY="620dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

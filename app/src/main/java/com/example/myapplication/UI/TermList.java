@@ -30,9 +30,21 @@ private Repository repository;
 
         FloatingActionButton fab = findViewById(R.id.termListFloatingActionButton);
         fab.setOnClickListener(view -> {
-
-        Intent intent = new Intent(TermList.this, TermDetails.class);
+  // public void onClick(View view)
+    Intent intent = new Intent(TermList.this, TermDetails.class);
         startActivity(intent);
     });
+    }
+
+    @Override
+    protected void onResume(){
+
+        super.onResume();
+        List<Terms> allTerms = repository.getmAllTerms();
+        RecyclerView recyclerView = findViewById(R.id.termListRecyclerView);
+        final TermAdapter termAdapter = new TermAdapter(this);
+        recyclerView.setAdapter(termAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        termAdapter.setTerms(allTerms);
     }
 }

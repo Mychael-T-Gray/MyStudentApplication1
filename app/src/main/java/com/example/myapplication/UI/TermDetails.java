@@ -1,6 +1,8 @@
 package com.example.myapplication.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -45,6 +47,17 @@ Repository repository;
         editTermStart.setText(termStart);
         editTermEnd.setText(termEnd);
         repository=new Repository(getApplication());
+
+
+
+        RecyclerView recyclerView = findViewById(R.id.courseRecycleView);
+        repository=new Repository(getApplication());
+        final CourseAdapter courseAdapter = new CourseAdapter(this);
+        recyclerView.setAdapter(courseAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+
 
         Button button = findViewById(R.id.saveTermButton);
         button.setOnClickListener(new View.OnClickListener() {
