@@ -28,9 +28,11 @@ private Repository repository;
         List<Terms> allTerms = repository.getmAllTerms();
         termAdapter.setTerms(allTerms);
 
+
+
         FloatingActionButton fab = findViewById(R.id.termListFloatingActionButton);
         fab.setOnClickListener(view -> {
-  // public void onClick(View view)
+
     Intent intent = new Intent(TermList.this, TermDetails.class);
         startActivity(intent);
     });

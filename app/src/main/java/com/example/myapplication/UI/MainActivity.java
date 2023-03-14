@@ -18,9 +18,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button button = findViewById(R.id.mainScreenTermListButton);
-        /*Terms terms = new Terms(0,"English","1/11/111","2/2/2222");
+        Terms terms = new Terms(0,"English","1/11/111","2/2/2222");
         Repository repository = new Repository(getApplication());
-        repository.insert(terms);*/
+        repository.update(terms);
 
 
 
