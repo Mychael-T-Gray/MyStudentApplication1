@@ -60,14 +60,7 @@ Repository repository;
         final CourseAdapter courseAdapter = new CourseAdapter(this);
         recyclerView.setAdapter(courseAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        //courseAdapter.setCourses(repository.getmAllCourses());
-       /* repository.getmAllCourses().observe(this, new Observer<List<Courses>>() {
-            @Override
-            public void onChanged(@Nullable final List<Courses> courses) {
-                // Update the cached copy of the courses in the adapter.
-                courseAdapter.setCourses(courses);
-            }
-        });*/
+
         repository.getmCoursesByTermId(termId).observe(this, new Observer<List<Courses>>() {
             @Override
             public void onChanged(@Nullable final List<Courses> courses) {

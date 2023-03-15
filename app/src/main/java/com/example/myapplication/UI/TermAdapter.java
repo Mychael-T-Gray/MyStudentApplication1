@@ -16,6 +16,7 @@ import com.example.myapplication.entities.Terms;
 import java.util.List;
 
 public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermListViewHolder> {
+
     class TermListViewHolder extends RecyclerView.ViewHolder{
         private final TextView termItemView;
         private TermListViewHolder(View itemview){
@@ -25,7 +26,14 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermListViewHo
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
+
+
+
                     final Terms currentTerm = mTerms.get(position);
+
+                    Intent intent1 = new Intent(context, CourseList.class); // Navigate to CourseList activity
+                    intent1.putExtra("termId", currentTerm.getTermId()); // Pass the termId
+                    context.startActivity(intent1);
 
                     Intent intent = new Intent(context, TermDetails.class);
 
@@ -77,10 +85,10 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermListViewHo
         }
     }
 
-   /* @Override
-    public int getItemCount() {
-        return mTerms.size();
-    }*/
+    public interface OnItemClickListener {
+        void onItemClick(Terms term);
+    }
+
     @Override
     public int getItemCount() {
         return mTerms == null ? 0 : mTerms.size();

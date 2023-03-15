@@ -27,8 +27,7 @@ private Repository repository;
         termListLRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         repository = new Repository(getApplication());
 
-        /*List<Terms> allTerms = repository.getmAllTerms();
-        termAdapter.setTerms(allTerms);*/
+
         repository.getmAllTerms().observe(this, new Observer<List<Terms>>() {
             @Override
             public void onChanged(List<Terms> terms) {
@@ -50,13 +49,6 @@ private Repository repository;
     @Override
     protected void onResume(){
 
-        super.onResume();
-       /* List<Terms> allTerms = repository.getmAllTerms();
-        RecyclerView recyclerView = findViewById(R.id.termListRecyclerView);
-        final TermAdapter termAdapter = new TermAdapter(this);
-        recyclerView.setAdapter(termAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        termAdapter.setTerms(allTerms);*/
         super.onResume();
     }
 }
