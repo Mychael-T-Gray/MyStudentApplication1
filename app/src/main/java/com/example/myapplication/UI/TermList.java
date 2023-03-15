@@ -1,6 +1,7 @@
 package com.example.myapplication.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,8 +26,16 @@ private Repository repository;
         termListLRecyclerView.setAdapter(termAdapter);
         termListLRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         repository = new Repository(getApplication());
-        List<Terms> allTerms = repository.getmAllTerms();
-        termAdapter.setTerms(allTerms);
+
+        /*List<Terms> allTerms = repository.getmAllTerms();
+        termAdapter.setTerms(allTerms);*/
+        repository.getmAllTerms().observe(this, new Observer<List<Terms>>() {
+            @Override
+            public void onChanged(List<Terms> terms) {
+                // Update the RecyclerView's data when the terms list changes
+                termAdapter.setTerms(terms);
+            }
+        });
 
 
 
@@ -42,11 +51,12 @@ private Repository repository;
     protected void onResume(){
 
         super.onResume();
-        List<Terms> allTerms = repository.getmAllTerms();
+       /* List<Terms> allTerms = repository.getmAllTerms();
         RecyclerView recyclerView = findViewById(R.id.termListRecyclerView);
         final TermAdapter termAdapter = new TermAdapter(this);
         recyclerView.setAdapter(termAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        termAdapter.setTerms(allTerms);
+        termAdapter.setTerms(allTerms);*/
+        super.onResume();
     }
 }

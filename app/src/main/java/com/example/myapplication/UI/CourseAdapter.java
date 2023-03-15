@@ -38,6 +38,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseList
                     intent.putExtra("instructorName", currentCourse.getInstructorName());
                     intent.putExtra("instructorPhoneNumber", currentCourse.getInstructorPhoneNumber());
                     intent.putExtra("instructorEmail", currentCourse.getInstructorEmail());
+                    intent.putExtra("termId", currentCourse.getTermId());
                     context.startActivity(intent);
                 }
             });
@@ -62,7 +63,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseList
 
     @Override
     public void onBindViewHolder(@NonNull CourseAdapter.CourseListViewHolder holder, int position) {
-        if (mCourses != null && !mCourses.isEmpty()) {
+        if (mCourses != null) {
             Courses current = mCourses.get(position);
 
             String courseTitle = current.getCourseTitle();

@@ -139,7 +139,8 @@
             android:id="@+id/courseRecycleView"
             android:layout_width="374dp"
             android:layout_height="329dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginTop="84dp"
+            android:layout_marginRight="4dp"
             app:layout_constraintRight_toRightOf="@id/linearLayoutTermDisplayVertical"
             app:layout_constraintTop_toBottomOf="@id/linearLayoutTermDisplayVertical" />
 

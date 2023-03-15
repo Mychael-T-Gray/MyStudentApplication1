@@ -2,6 +2,8 @@ package com.example.myapplication.Database;
 
 import android.app.Application;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.myapplication.dao.AssessmentsDao;
 import com.example.myapplication.dao.CoursesDao;
 import com.example.myapplication.dao.TermsDao;
@@ -18,6 +20,7 @@ public class Repository {
     private final CoursesDao mCoursesDao;
     private final AssessmentsDao mAssessmentsDao;
 
+
     private List<Terms> mAllTerms;
     private List<Courses> mAllCourses;
     private List<AssessmentsEntity> mAllAssessments;
@@ -32,13 +35,16 @@ public class Repository {
         mAssessmentsDao = db.assessmentsDao();
     }
 
-    public List<Terms> getmAllTerms() {
+   /* public List<Terms> getmAllTerms() {
         dataBaseExecutor.execute(() -> {
             mAllTerms = mTermsDao.getAllTerms();
         });
 
         return mAllTerms;
-    }
+    }*/
+   public LiveData<List<Terms>> getmAllTerms() {
+       return mTermsDao.getAllTerms();
+   }
 
    public void insert(Terms terms) {
        dataBaseExecutor.execute(() -> {
@@ -58,28 +64,34 @@ public class Repository {
     }
 
 
-    public List<Courses> getmAllCourses() {
+   /* public List<Courses> getmAllCourses() {
         dataBaseExecutor.execute(() -> {
             mAllCourses = mCoursesDao.getAllCourses();
         });
         return mAllCourses;
+    }*/
+    public LiveData<List<Courses>> getmAllCourses() {
+        return mCoursesDao.getAllCourses();
+    }
+    public LiveData<List<Courses>> getmCoursesByTermId(int termId) {
+        return mCoursesDao.getCoursesByTermId(termId);
     }
 
     public void insert(Courses courses) {
         dataBaseExecutor.execute(() -> {
-            mAllCourses = mCoursesDao.getAllCourses();
+            mCoursesDao.insert(courses);
         });
     }
 
     public void update(Courses courses) {
         dataBaseExecutor.execute(() -> {
-            mAllCourses = mCoursesDao.getAllCourses();
+                mCoursesDao.update(courses);
         });
     }
 
     public void delete(Courses courses) {
         dataBaseExecutor.execute(() -> {
-            mAllCourses = mCoursesDao.getAllCourses();
+            mCoursesDao.delete(courses);
         });
 
     }
@@ -99,7 +111,7 @@ public class Repository {
 
     public void insert(AssessmentsEntity assessmentsEntity) {
         dataBaseExecutor.execute(() -> {
-            mAllAssessments = mAssessmentsDao.getAllAssessments();
+            mAssessmentsDao.insert(assessmentsEntity);
         });
         try {
             Thread.sleep(1000);

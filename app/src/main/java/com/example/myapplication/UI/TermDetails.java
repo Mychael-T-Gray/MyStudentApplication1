@@ -1,6 +1,8 @@
 package com.example.myapplication.UI;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,8 +17,11 @@ import android.widget.Toast;
 
 import com.example.myapplication.Database.Repository;
 import com.example.myapplication.R;
+import com.example.myapplication.entities.Courses;
 import com.example.myapplication.entities.Terms;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.List;
 
 public class TermDetails extends AppCompatActivity {
 EditText editTermTitle;
@@ -55,7 +60,27 @@ Repository repository;
         final CourseAdapter courseAdapter = new CourseAdapter(this);
         recyclerView.setAdapter(courseAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        courseAdapter.setCourses(repository.getmAllCourses());
+        //courseAdapter.setCourses(repository.getmAllCourses());
+       /* repository.getmAllCourses().observe(this, new Observer<List<Courses>>() {
+            @Override
+            public void onChanged(@Nullable final List<Courses> courses) {
+                // Update the cached copy of the courses in the adapter.
+                courseAdapter.setCourses(courses);
+            }
+        });*/
+        repository.getmCoursesByTermId(termId).observe(this, new Observer<List<Courses>>() {
+            @Override
+            public void onChanged(@Nullable final List<Courses> courses) {
+                // Update the cached copy of the courses in the adapter.
+                courseAdapter.setCourses(courses);
+            }
+        });
+
+
+
+
+
+
 
 
 
