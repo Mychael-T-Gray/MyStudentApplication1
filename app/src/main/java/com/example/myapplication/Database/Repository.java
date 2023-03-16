@@ -35,22 +35,17 @@ public class Repository {
         mAssessmentsDao = db.assessmentsDao();
     }
 
-   /* public List<Terms> getmAllTerms() {
+
+    public LiveData<List<Terms>> getmAllTerms() {
+        return mTermsDao.getAllTerms();
+    }
+
+    public void insert(Terms terms) {
         dataBaseExecutor.execute(() -> {
-            mAllTerms = mTermsDao.getAllTerms();
+            mTermsDao.insert(terms);
         });
+    }
 
-        return mAllTerms;
-    }*/
-   public LiveData<List<Terms>> getmAllTerms() {
-       return mTermsDao.getAllTerms();
-   }
-
-   public void insert(Terms terms) {
-       dataBaseExecutor.execute(() -> {
-           mTermsDao.insert(terms);
-       });
-   }
     public void update(Terms terms) {
         dataBaseExecutor.execute(() -> {
             mTermsDao.update(terms);
@@ -64,15 +59,10 @@ public class Repository {
     }
 
 
-   /* public List<Courses> getmAllCourses() {
-        dataBaseExecutor.execute(() -> {
-            mAllCourses = mCoursesDao.getAllCourses();
-        });
-        return mAllCourses;
-    }*/
     public LiveData<List<Courses>> getmAllCourses() {
         return mCoursesDao.getAllCourses();
     }
+
     public LiveData<List<Courses>> getmCoursesByTermId(int termId) {
         return mCoursesDao.getCoursesByTermId(termId);
     }
@@ -85,7 +75,7 @@ public class Repository {
 
     public void update(Courses courses) {
         dataBaseExecutor.execute(() -> {
-                mCoursesDao.update(courses);
+            mCoursesDao.update(courses);
         });
     }
 
@@ -97,48 +87,26 @@ public class Repository {
     }
 
 
-        public List<AssessmentsEntity> getmAllAssessments() {
-            dataBaseExecutor.execute(() -> {
-                mAllAssessments = mAssessmentsDao.getAllAssessments();
-            });
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return mAllAssessments;
-        }
+    public LiveData<List<AssessmentsEntity>> getmAllAssessments() {
+        return mAssessmentsDao.getAllAssessments();
+
+    }
 
     public void insert(AssessmentsEntity assessmentsEntity) {
         dataBaseExecutor.execute(() -> {
             mAssessmentsDao.insert(assessmentsEntity);
         });
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     public void update(AssessmentsEntity assessmentsEntity) {
         dataBaseExecutor.execute(() -> {
-            mAllAssessments = mAssessmentsDao.getAllAssessments();
+            mAssessmentsDao.update(assessmentsEntity);
         });
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     public void delete(AssessmentsEntity assessmentsEntity) {
         dataBaseExecutor.execute(() -> {
-            mAllAssessments = mAssessmentsDao.getAllAssessments();
+            mAssessmentsDao.delete(assessmentsEntity);
         });
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }

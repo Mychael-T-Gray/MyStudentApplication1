@@ -31,8 +31,8 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermListViewHo
 
                     final Terms currentTerm = mTerms.get(position);
 
-                    Intent intent1 = new Intent(context, CourseList.class); // Navigate to CourseList activity
-                    intent1.putExtra("termId", currentTerm.getTermId()); // Pass the termId
+                    Intent intent1 = new Intent(context, CourseList.class);
+                    intent1.putExtra("termId", currentTerm.getTermId());
                     context.startActivity(intent1);
 
                     Intent intent = new Intent(context, TermDetails.class);

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -44,3 +45,20 @@ public class CourseList extends AppCompatActivity {
         });
     }
 }
+
+          /*  public void onChanged(@Nullable final List<Courses> courses) {
+                if (courses != null && !courses.isEmpty()) {
+                    // Print the size of the list of courses and log each course object
+                    Log.d("CourseList", "Number of courses: " + courses.size());
+                    for (Courses course : courses) {
+                        Log.d("CourseList", "Course: " + course.getCourseTitle());
+                    }
+                    // Update the cached copy of the courses in the adapter.
+                    courseAdapter.setCourses(courses);
+                } else {
+                    Log.d("CourseList", "No courses found for termId: " + termId);
+                }
+            }
+        });
+    }
+*/

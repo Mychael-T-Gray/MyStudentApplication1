@@ -1,5 +1,6 @@
 package com.example.myapplication.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -21,5 +22,5 @@ public interface AssessmentsDao {
     @Delete
     void delete(AssessmentsEntity assessmentsEntity);
     @Query("SELECT * FROM ASSESSMENTS ORDER BY assessmentId ASC" )
-    List<AssessmentsEntity> getAllAssessments();
+    LiveData<List<AssessmentsEntity>> getAllAssessments();
 }

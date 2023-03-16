@@ -66,6 +66,7 @@ Repository repository;
             public void onChanged(@Nullable final List<Courses> courses) {
                 // Update the cached copy of the courses in the adapter.
                 courseAdapter.setCourses(courses);
+                Log.d("CourseList", "onChanged: courses size = " + courses.size());
             }
         });
 
