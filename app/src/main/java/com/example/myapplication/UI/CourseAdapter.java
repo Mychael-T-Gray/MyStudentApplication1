@@ -1,7 +1,6 @@
 package com.example.myapplication.UI;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,55 +13,34 @@ import com.example.myapplication.R;
 import com.example.myapplication.entities.Courses;
 
 import java.util.List;
-
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseListViewHolder> {
-
-    class CourseListViewHolder extends RecyclerView.ViewHolder {
-        private final TextView courseItemView;
-        private CourseListViewHolder(View itemView) {
-            super(itemView);
-            courseItemView = itemView.findViewById(R.id.courseItemView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    final Courses currentCourse = mCourses.get(position);
-
-                    Intent intent = new Intent(context, CourseList.class);
-
-                    intent.putExtra("courseId", currentCourse.getCourseId());
-                    intent.putExtra("courseTitle", currentCourse.getCourseTitle());
-                    intent.putExtra("courseStartDate", currentCourse.getCourseStartDate());
-                    intent.putExtra("courseEndDate", currentCourse.getCourseEndDate());
-                    intent.putExtra("courseProgress", currentCourse.getCourseProgress());
-                    intent.putExtra("instructorName", currentCourse.getInstructorName());
-                    intent.putExtra("instructorPhoneNumber", currentCourse.getInstructorPhoneNumber());
-                    intent.putExtra("instructorEmail", currentCourse.getInstructorEmail());
-                    intent.putExtra("termId", currentCourse.getTermId());
-                    context.startActivity(intent);
-                }
-            });
-        }
+    // Define an interface to handle clicks on list items
+    public interface OnItemClickListener {
+        void onItemClick(Courses course);
     }
 
     private List<Courses> mCourses;
     private final Context context;
     private final LayoutInflater mInflater;
+    private final OnItemClickListener mListener;
 
-    public CourseAdapter(Context context) {
+    public CourseAdapter(Context context, OnItemClickListener onItemClickListener) {
         mInflater = LayoutInflater.from(context);
         this.context = context;
+        mListener=onItemClickListener;
     }
+
+
 
     @NonNull
     @Override
-    public CourseAdapter.CourseListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CourseListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.course_list_item, parent, false);
         return new CourseListViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CourseAdapter.CourseListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CourseListViewHolder holder, int position) {
         if (mCourses != null) {
             Courses current = mCourses.get(position);
 
@@ -74,7 +52,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseList
             String instructorPhoneNumber = current.getInstructorPhoneNumber();
             String instructorEmail = current.getInstructorEmail();
             String displayText = courseTitle + " - " + courseStart + " to " + courseEnd + " progress =" +
-            courseProgress + " Instructor Name = " + instructorName + " Phone Number = " + instructorPhoneNumber +
+                    courseProgress + " Instructor Name = " + instructorName + " Phone Number = " + instructorPhoneNumber +
                     " Email = " + instructorEmail;
 
             holder.courseItemView.setText(displayText);
@@ -93,9 +71,23 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseList
         notifyDataSetChanged();
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return position;
+    public class CourseListViewHolder extends RecyclerView.ViewHolder {
+        private final TextView courseItemView;
+
+        public CourseListViewHolder(View itemView) {
+            super(itemView);
+            courseItemView = itemView.findViewById(R.id.courseItemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    final Courses currentCourse = mCourses.get(position);
+
+                    mListener.onItemClick(currentCourse);
+                }
+            });
+        }
     }
 }
+
 

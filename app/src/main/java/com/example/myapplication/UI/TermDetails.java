@@ -23,7 +23,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class TermDetails extends AppCompatActivity {
+/*public class TermDetails extends AppCompatActivity {
 EditText editTermTitle;
 EditText editTermStart;
 EditText editTermEnd;
@@ -68,6 +68,7 @@ Repository repository;
                 courseAdapter.setCourses(courses);
                 Log.d("CourseList", "onChanged: courses size = " + courses.size());
             }
+
         });
 
 
@@ -103,4 +104,65 @@ Repository repository;
 
     }
 
+}*/
+public class TermDetails extends AppCompatActivity {
+
+    EditText editTermTitle;
+    EditText editTermStart;
+    EditText editTermEnd;
+    String termTitle;
+    String termStart;
+    String termEnd;
+    int termId;
+    Terms terms;
+    Repository repository;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_term_details);
+        editTermTitle = findViewById(R.id.termDetailsTerTitelEditText);
+        editTermStart = findViewById(R.id.termDetailsTermStartDateEditText);
+        editTermEnd = findViewById(R.id.termDetailsTermEndDateEditText);
+
+        termId = getIntent().getIntExtra("termId",-1);
+        termTitle = getIntent().getStringExtra("termTitle");
+        termStart = getIntent().getStringExtra("termStart");
+        termEnd = getIntent().getStringExtra("termEnd");
+
+        editTermTitle.setText(termTitle);
+        editTermStart.setText(termStart);
+        editTermEnd.setText(termEnd);
+        repository=new Repository(getApplication());
+
+        RecyclerView recyclerView = findViewById(R.id.courseRecycleView);
+        final CourseAdapter courseAdapter = new CourseAdapter(this, new CourseAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Courses course) {
+                Intent intent = new Intent(TermDetails.this, CourseDetails.class);
+                intent.putExtra("courseId", course.getCourseId());
+                intent.putExtra("courseTitle", course.getCourseTitle());
+                intent.putExtra("courseStartDate", course.getCourseStartDate());
+                intent.putExtra("courseEndDate", course.getCourseEndDate());
+                intent.putExtra("courseProgress", course.getCourseProgress());
+                intent.putExtra("instructorName", course.getInstructorName());
+                intent.putExtra("instructorPhoneNumber", course.getInstructorPhoneNumber());
+                intent.putExtra("instructorEmail", course.getInstructorEmail());
+                startActivity(intent);
+            }
+        });
+        recyclerView.setAdapter(courseAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        repository.getmCoursesByTermId(termId).observe(this, new Observer<List<Courses>>() {
+            @Override
+            public void onChanged(@Nullable final List<Courses> courses) {
+                // Update the cached copy of the courses in the adapter.
+                courseAdapter.setCourses(courses);
+                Log.d("CourseList", "onChanged: courses size = " + courses.size());
+            }
+
+        });
+    }
 }

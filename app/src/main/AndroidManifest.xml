@@ -45,18 +45,11 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity
-            android:name=".UI.CourseList"
-            android:exported="false"
-            android:label="Course List">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+
         <activity
             android:name=".UI.CourseDetails"
             android:exported="false"
-            android:label="Course List">
+            android:label="Course Details">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

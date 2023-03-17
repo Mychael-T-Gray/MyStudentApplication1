@@ -31,9 +31,8 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermListViewHo
 
                     final Terms currentTerm = mTerms.get(position);
 
-                    Intent intent1 = new Intent(context, CourseList.class);
-                    intent1.putExtra("termId", currentTerm.getTermId());
-                    context.startActivity(intent1);
+                    TermIdSingleton.setTermId(currentTerm.getTermId());
+
 
                     Intent intent = new Intent(context, TermDetails.class);
 
@@ -78,6 +77,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermListViewHo
             holder.termItemView.setText(displayText);
 
 
+
     }
         else{
         holder.termItemView.setText("No Terms Named");
@@ -85,9 +85,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermListViewHo
         }
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(Terms term);
-    }
+
 
     @Override
     public int getItemCount() {
