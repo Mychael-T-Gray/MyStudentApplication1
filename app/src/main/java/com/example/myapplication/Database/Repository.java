@@ -67,6 +67,12 @@ public class Repository {
         return mCoursesDao.getCoursesByTermId(termId);
     }
 
+    public LiveData<Courses> getCourseById(int courseId) {
+        return mCoursesDao.getCourseById(courseId);
+    }
+
+
+
     public void insert(Courses courses) {
         dataBaseExecutor.execute(() -> {
             mCoursesDao.insert(courses);

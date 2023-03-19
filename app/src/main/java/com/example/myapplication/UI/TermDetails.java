@@ -76,25 +76,37 @@ public class TermDetails extends AppCompatActivity {
         });
 
 
+        if(termId == -1){
+            courseAdapter.setCourses(new ArrayList<>());
+        }
 
+        else {
+            recyclerView.setAdapter(courseAdapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        recyclerView.setAdapter(courseAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        repository.getmCoursesByTermId(termId).observe(this, new Observer<List<Courses>>() {
-            @Override
-            public void onChanged(@Nullable final List<Courses> courses) {
-                // Update the cached copy of the courses in the adapter.
-                if (courses != null) {
-                    mCourses = courses;
-                    courseAdapter.setCourses(courses);
-                    mAdapter=courseAdapter;
-                    Log.d("CourseList", "onChanged: courses size = " + courses.size());
+            repository.getmCoursesByTermId(termId).observe(this, new Observer<List<Courses>>() {
+                @Override
+                public void onChanged(@Nullable final List<Courses> courses) {
+                    // Update the cached copy of the courses in the adapter.
+                    if (courses != null) {
+                        mCourses = courses;
+                        courseAdapter.setCourses(courses);
+                        mAdapter = courseAdapter;
+                        Log.d("CourseList", "onChanged: courses size = " + courses.size());
+                    }
                 }
+
+            });
+        }
+        Button buttonAddCourse = findViewById(R.id.addCourseButton);
+        buttonAddCourse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent( TermDetails.this, CourseDetails.class);
+                intent.putExtra("termId", termId);
+                startActivity(intent);
             }
-
         });
-
         Button button = findViewById(R.id.saveTermButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override

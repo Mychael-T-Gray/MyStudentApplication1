@@ -43,10 +43,6 @@ private Terms term;
         fab.setOnClickListener(view -> {
 
             Intent intent = new Intent(TermList.this, TermDetails.class);
-            intent.putExtra("termId", term.getTermId());
-            intent.putExtra("termTitle", term.getTermTitle());
-            intent.putExtra("termStart", term.getTermStart());
-            intent.putExtra("termEnd", term.getTermEnd());
             startActivity(intent);
     });
     }

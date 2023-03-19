@@ -22,10 +22,10 @@ public class MainActivity extends AppCompatActivity {
        /* Terms terms = new Terms(0,"English","1/11/111","2/2/2222");
         Repository repository = new Repository(getApplication());
         repository.insert(terms);
-        */
+
         Courses courses = new Courses("Math","12/12/1212","13/13/1313", "Completed", "Big Bill", "345-344-3434", "abd@as.com", 1);
         Repository repository1 = new Repository(getApplication());
-        repository1.insert(courses);
+        repository1.insert(courses);*/
 
 
         button.setOnClickListener(view -> {

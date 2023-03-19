@@ -1,6 +1,7 @@
 package com.example.myapplication.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -129,7 +130,7 @@ public class CourseDetails extends AppCompatActivity {
     private EditText editInstructorName;
     private EditText editInstructorPhoneNumber;
     private EditText editInstructorEmail;
-    private List<Courses> mCourses;
+
     private int courseId;
     private int termId;
     private String courseTitle;
@@ -194,7 +195,7 @@ public class CourseDetails extends AppCompatActivity {
                 if (courseId == -1) {
                     Courses course = new Courses( title, start, end, progress, name, phoneNumber, email, termId);
                     repository.insert(course);
-                    mCourses.add(course);
+
                 } else {
                     Courses course = new Courses(courseId, title, start, end, progress, name, phoneNumber, email, getIntent().getIntExtra("termId", -1));
                     repository.update(course);
@@ -203,6 +204,24 @@ public class CourseDetails extends AppCompatActivity {
                 finish();
             }
         });
+
+        Button deleteCourseButton = findViewById(R.id.deleteCourseButton);
+        deleteCourseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Delete the course from the database
+                repository.getCourseById(courseId).observe(CourseDetails.this, new Observer<Courses>() {
+                    @Override
+                    public void onChanged(Courses course) {
+                        if (course != null) {
+                            repository.delete(course);
+                            finish();
+                        }
+                    }
+                });
+            }
+        });
+
     }
 }
 
