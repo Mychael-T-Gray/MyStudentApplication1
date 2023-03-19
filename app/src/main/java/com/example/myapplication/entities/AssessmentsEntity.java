@@ -7,16 +7,15 @@ import androidx.room.PrimaryKey;
 public class AssessmentsEntity {
     @PrimaryKey(autoGenerate = true)
     private int assessmentId;
-    private String performanceAssessment;
-    private String objectiveAssessment;
+
+    private String assessmentType;
     private String assessmentTitle;
     private String assessmentEndDate;
     private int courseId;
 
-    public AssessmentsEntity(int assessmentId, String performanceAssessment, String objectiveAssessment, String assessmentTitle, String assessmentEndDate, int courseId) {
-        this.assessmentId = assessmentId;
-        this.performanceAssessment = performanceAssessment;
-        this.objectiveAssessment = objectiveAssessment;
+    public AssessmentsEntity( String assessmentType, String assessmentTitle, String assessmentEndDate, int courseId) {
+
+        this.assessmentType = assessmentType;
         this.assessmentTitle = assessmentTitle;
         this.assessmentEndDate = assessmentEndDate;
         this.courseId = courseId;
@@ -33,20 +32,12 @@ public class AssessmentsEntity {
         this.assessmentId = assessmentId;
     }
 
-    public String getPerformanceAssessment() {
-        return performanceAssessment;
+    public String getAssessmentType() {
+        return assessmentType;
     }
 
-    public void setPerformanceAssessment(String performanceAssessment) {
-        this.performanceAssessment = performanceAssessment;
-    }
-
-    public String getObjectiveAssessment() {
-        return objectiveAssessment;
-    }
-
-    public void setObjectiveAssessment(String objectiveAssessment) {
-        this.objectiveAssessment = objectiveAssessment;
+    public void setAssessmentType(String assessmentType) {
+        this.assessmentType = assessmentType;
     }
 
     public String getAssessmentTitle() {
