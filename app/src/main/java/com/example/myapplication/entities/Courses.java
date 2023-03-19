@@ -16,6 +16,17 @@ public class Courses {
     private String instructorEmail;
     private int termId;
 
+    public Courses( String courseTitle, String courseStartDate, String courseEndDate, String courseProgress, String instructorName, String instructorPhoneNumber, String instructorEmail, int termId) {
+
+        this.courseTitle = courseTitle;
+        this.courseStartDate = courseStartDate;
+        this.courseEndDate = courseEndDate;
+        this.courseProgress = courseProgress;
+        this.instructorName = instructorName;
+        this.instructorPhoneNumber = instructorPhoneNumber;
+        this.instructorEmail = instructorEmail;
+        this.termId = termId;
+    }
     public Courses(int courseId, String courseTitle, String courseStartDate, String courseEndDate, String courseProgress, String instructorName, String instructorPhoneNumber, String instructorEmail, int termId) {
         this.courseId = courseId;
         this.courseTitle = courseTitle;

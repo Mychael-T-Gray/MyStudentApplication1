@@ -88,6 +88,19 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseList
             });
         }
     }
+
+    public int findPositionById(int courseId) {
+        if(mCourses == null){
+            return -1;
+        }
+        for (int i = 0; i < mCourses.size(); i++) {
+            if (mCourses.get(i).getCourseId() == courseId) {
+                return i;
+            }
+        }
+        return -1;
+    }
 }
+
 
 

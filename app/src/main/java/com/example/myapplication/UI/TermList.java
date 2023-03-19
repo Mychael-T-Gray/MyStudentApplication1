@@ -17,6 +17,7 @@ import java.util.List;
 
 public class TermList extends AppCompatActivity {
 private Repository repository;
+private Terms term;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,8 +42,12 @@ private Repository repository;
         FloatingActionButton fab = findViewById(R.id.termListFloatingActionButton);
         fab.setOnClickListener(view -> {
 
-    Intent intent = new Intent(TermList.this, TermDetails.class);
-        startActivity(intent);
+            Intent intent = new Intent(TermList.this, TermDetails.class);
+            intent.putExtra("termId", term.getTermId());
+            intent.putExtra("termTitle", term.getTermTitle());
+            intent.putExtra("termStart", term.getTermStart());
+            intent.putExtra("termEnd", term.getTermEnd());
+            startActivity(intent);
     });
     }
 

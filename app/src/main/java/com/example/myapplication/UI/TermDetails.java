@@ -21,90 +21,10 @@ import com.example.myapplication.entities.Courses;
 import com.example.myapplication.entities.Terms;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
-/*public class TermDetails extends AppCompatActivity {
-EditText editTermTitle;
-EditText editTermStart;
-EditText editTermEnd;
-String termTitle;
-String termStart;
-String termEnd;
-int termId;
-Terms terms;
-Repository repository;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_term_details);
-        editTermTitle = findViewById(R.id.termDetailsTerTitelEditText);
-        editTermStart = findViewById(R.id.termDetailsTermStartDateEditText);
-        editTermEnd = findViewById(R.id.termDetailsTermEndDateEditText);
-
-        termId = getIntent().getIntExtra("termId",-1);
-        termTitle = getIntent().getStringExtra("termTitle");
-        termStart = getIntent().getStringExtra("termStart");
-        termEnd = getIntent().getStringExtra("termEnd");
-
-        editTermTitle.setText(termTitle);
-        editTermStart.setText(termStart);
-        editTermEnd.setText(termEnd);
-        repository=new Repository(getApplication());
-
-
-
-        RecyclerView recyclerView = findViewById(R.id.courseRecycleView);
-        repository=new Repository(getApplication());
-        final CourseAdapter courseAdapter = new CourseAdapter(this);
-        recyclerView.setAdapter(courseAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        repository.getmCoursesByTermId(termId).observe(this, new Observer<List<Courses>>() {
-            @Override
-            public void onChanged(@Nullable final List<Courses> courses) {
-                // Update the cached copy of the courses in the adapter.
-                courseAdapter.setCourses(courses);
-                Log.d("CourseList", "onChanged: courses size = " + courses.size());
-            }
-
-        });
-
-
-
-
-
-
-
-
-
-        Button button = findViewById(R.id.saveTermButton);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(termId == -1 ){
-                terms= new Terms(0,editTermTitle.getText().toString(),editTermStart.getText().toString(), editTermEnd.getText().toString());
-                repository.insert(terms);
-                //Toast.makeText(this, "Term is saved",Toast.LENGTH_LONG).show();
-                }
-                else{
-                    terms= new Terms(termId,editTermTitle.getText().toString(),editTermStart.getText().toString(), editTermEnd.getText().toString());
-
-                    repository.update(terms);
-
-                   //Toast.makeText(this, "Term is updated",Toast.LENGTH_LONG).show();
-                }
-                Intent intent = new Intent( TermDetails.this, TermList.class);
-                startActivity(intent);
-            }
-
-        });
-
-
-    }
-
-}*/
 public class TermDetails extends AppCompatActivity {
 
     EditText editTermTitle;
@@ -116,7 +36,8 @@ public class TermDetails extends AppCompatActivity {
     int termId;
     Terms terms;
     Repository repository;
-
+    private CourseAdapter mAdapter;
+    private List<Courses> mCourses = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -149,9 +70,14 @@ public class TermDetails extends AppCompatActivity {
                 intent.putExtra("instructorName", course.getInstructorName());
                 intent.putExtra("instructorPhoneNumber", course.getInstructorPhoneNumber());
                 intent.putExtra("instructorEmail", course.getInstructorEmail());
+                intent.putExtra("termId", termId);
                 startActivity(intent);
             }
         });
+
+
+
+
         recyclerView.setAdapter(courseAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -159,10 +85,38 @@ public class TermDetails extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable final List<Courses> courses) {
                 // Update the cached copy of the courses in the adapter.
-                courseAdapter.setCourses(courses);
-                Log.d("CourseList", "onChanged: courses size = " + courses.size());
+                if (courses != null) {
+                    mCourses = courses;
+                    courseAdapter.setCourses(courses);
+                    mAdapter=courseAdapter;
+                    Log.d("CourseList", "onChanged: courses size = " + courses.size());
+                }
             }
 
         });
+
+        Button button = findViewById(R.id.saveTermButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(termId == -1 ){
+                    terms= new Terms(0,editTermTitle.getText().toString(),editTermStart.getText().toString(), editTermEnd.getText().toString());
+                    repository.insert(terms);
+                    //Toast.makeText(this, "Term is saved",Toast.LENGTH_LONG).show();
+                }
+                else{
+                    terms= new Terms(termId,editTermTitle.getText().toString(),editTermStart.getText().toString(), editTermEnd.getText().toString());
+
+                    repository.update(terms);
+
+                    //Toast.makeText(this, "Term is updated",Toast.LENGTH_LONG).show();
+                }
+                Intent intent = new Intent( TermDetails.this, TermList.class);
+                startActivity(intent);
+            }
+
+        });
+
     }
+
 }
