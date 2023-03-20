@@ -97,6 +97,9 @@ public class Repository {
         return mAssessmentsDao.getAllAssessments();
 
     }
+    public LiveData<List<AssessmentsEntity>> getAssessmentsByCourseId(int courseId) {
+        return mAssessmentsDao.getAssessmentsByCourseId(courseId);
+    }
 
     public void insert(AssessmentsEntity assessmentsEntity) {
         dataBaseExecutor.execute(() -> {

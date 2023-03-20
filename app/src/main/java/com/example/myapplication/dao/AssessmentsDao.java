@@ -23,4 +23,8 @@ public interface AssessmentsDao {
     void delete(AssessmentsEntity assessmentsEntity);
     @Query("SELECT * FROM ASSESSMENTS ORDER BY assessmentId ASC" )
     LiveData<List<AssessmentsEntity>> getAllAssessments();
+    @Query("SELECT * FROM assessments WHERE courseId = :courseId")
+    LiveData<List<AssessmentsEntity>> getAssessmentsByCourseId(int courseId);
+
+
 }

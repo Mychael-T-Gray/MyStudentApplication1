@@ -2,6 +2,7 @@ package com.example.myapplication.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -13,7 +14,11 @@ import android.widget.Toast;
 
 import com.example.myapplication.Database.Repository;
 import com.example.myapplication.R;
+import com.example.myapplication.entities.AssessmentsEntity;
 import com.example.myapplication.entities.Courses;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class CourseDetails extends AppCompatActivity {
@@ -36,6 +41,9 @@ public class CourseDetails extends AppCompatActivity {
     private String instructorEmail;
 
     private Repository repository;
+    AssessmentsEntity assessmentsEntity;
+    AssessmentAdapter assessmentAdapter;
+    private List<AssessmentsEntity> mAssessments = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,8 +122,44 @@ public class CourseDetails extends AppCompatActivity {
                     }
                 });
             }
+
+        });
+        RecyclerView assessmentRecyclerView = findViewById(R.id.assessmentRecycleView);
+        final AssessmentAdapter assessmentAdapter = new AssessmentAdapter(this, new AssessmentAdapter.OnItemClickListener()
+
+        {
+            @Override
+            public void onItemClick(AssessmentsEntity assessment) {
+                Intent intent= new Intent(CourseDetails.this, AssessmentDetails.class);
+                intent.putExtra("assessmentId", assessment.getAssessmentId());
+                intent.putExtra("assessmentType", assessment.getAssessmentType());
+                intent.putExtra("assessmentTitle", assessment.getAssessmentTitle());
+                intent.putExtra("assessmentEndDate", assessment.getAssessmentEndDate());
+                intent.putExtra("courseId", assessment.getCourseId());
+                startActivity(intent);
+   ;
+            }
+        });
+        assessmentRecyclerView.setAdapter(assessmentAdapter);
+        repository.getAssessmentsByCourseId(courseId).observe(this, new Observer<List<AssessmentsEntity>>() {
+            @Override
+            public void onChanged(List<AssessmentsEntity> assessmentsEntities) {
+                assessmentAdapter.setAssessments(assessmentsEntities);
+            }
         });
 
+        assessmentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+    Button assessmentsButton= findViewById(R.id.goToAssesments);
+    assessmentsButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(CourseDetails.this, AssessmentDetails.class);
+            intent.putExtra("termId", termId);
+            intent.putExtra("courseId", courseId);
+            startActivity(intent);
+        }
+    });
     }
 }
 
