@@ -1,6 +1,5 @@
 package com.example.myapplication.UI;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,6 +15,7 @@ import android.widget.Toast;
 import com.example.myapplication.Database.Repository;
 import com.example.myapplication.R;
 import com.example.myapplication.entities.AssessmentsEntity;
+import com.example.myapplication.entities.CourseNotes;
 import com.example.myapplication.entities.Courses;
 
 import java.util.ArrayList;
@@ -31,6 +31,11 @@ public class CourseDetails extends AppCompatActivity {
     private EditText editInstructorName;
     private EditText editInstructorPhoneNumber;
     private EditText editInstructorEmail;
+
+    private EditText enterCourseNotes;
+    private RecyclerView courseNotesRecyclerView;
+    private CourseNotesAdapter courseNotesAdapter;
+
 
     private int courseId;
     private int termId;
@@ -59,6 +64,7 @@ public class CourseDetails extends AppCompatActivity {
         editInstructorName = findViewById(R.id.termDetailsInstructorName);
         editInstructorPhoneNumber = findViewById(R.id.courseDetailsInstructorPhoneNumberEditText);
         editInstructorEmail = findViewById(R.id.termDetailsInstructorEmail);
+
 
         courseId = getIntent().getIntExtra("courseId", -1);
         termId = getIntent().getIntExtra("termId", -1);
@@ -132,9 +138,10 @@ public class CourseDetails extends AppCompatActivity {
             }
 
         });
+
+
         RecyclerView assessmentRecyclerView = findViewById(R.id.assessmentRecycleView);
         final AssessmentAdapter assessmentAdapter = new AssessmentAdapter(this, new AssessmentAdapter.OnItemClickListener()
-
         {
             @Override
             public void onItemClick(AssessmentsEntity assessment) {
@@ -160,19 +167,51 @@ public class CourseDetails extends AppCompatActivity {
 
         assessmentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-    Button assessmentsButton= findViewById(R.id.goToAssesments);
-    assessmentsButton.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(CourseDetails.this, AssessmentDetails.class);
 
-            intent.putExtra("courseId", courseId);
-            intent.putExtra("assessmentId", assessmentId);
-            startActivity(intent);
+        enterCourseNotes = findViewById(R.id.enterCourseNotes);
+        courseNotesRecyclerView = findViewById(R.id.courseNotesRecyclerView);
+        courseNotesAdapter = new CourseNotesAdapter(this);
+        courseNotesRecyclerView.setAdapter(courseNotesAdapter);
+        courseNotesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        Button addCourseNotes = findViewById(R.id.addCourseNotes);
+        addCourseNotes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String noteText = enterCourseNotes.getText().toString().trim();
+                if (noteText.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Please enter a note", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                CourseNotes note = new CourseNotes(courseId, noteText);
+                repository.insert(note);
+                enterCourseNotes.setText("");
+            }
+        });
+
+        if (courseId != -1) {
+            repository.getCourseNotesByCourseId(courseId).observe(this, new Observer<List<CourseNotes>>() {
+                @Override
+                public void onChanged(List<CourseNotes> courseNotes) {
+                    courseNotesAdapter.setCourseNotes(courseNotes);
+                }
+            });
         }
-    });
+        Button assessmentsButton= findViewById(R.id.goToAssesments);
+        assessmentsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CourseDetails.this, AssessmentDetails.class);
+                intent.putExtra("courseId", courseId);
+                startActivity(intent);
+            }
+        });
     }
 }
+
+
+
 
 
 
