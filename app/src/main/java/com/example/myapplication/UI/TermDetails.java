@@ -7,11 +7,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
@@ -43,6 +45,7 @@ public class TermDetails extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term_details);
+        createDeleteTermButton();
         editTermTitle = findViewById(R.id.termDetailsTerTitelEditText);
         editTermStart = findViewById(R.id.termDetailsTermStartDateEditText);
         editTermEnd = findViewById(R.id.termDetailsTermEndDateEditText);
@@ -103,6 +106,7 @@ public class TermDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent( TermDetails.this, CourseDetails.class);
+                intent.putExtra("courseId", -1);
                 intent.putExtra("termId", termId);
                 startActivity(intent);
             }
@@ -130,5 +134,41 @@ public class TermDetails extends AppCompatActivity {
         });
 
     }
+    private void createDeleteTermButton() {
 
+        Button deleteTermButton = new Button(this);
+        deleteTermButton.setText("Delete Term");
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        deleteTermButton.setLayoutParams(layoutParams);
+        deleteTermButton.setBackgroundColor(Color.BLUE);
+
+
+        deleteTermButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                repository.getmCoursesByTermId(termId).observe(TermDetails.this, new Observer<List<Courses>>() {
+                    @Override
+                    public void onChanged(@Nullable final List<Courses> courses) {
+                        if (courses != null && courses.size() > 0) {
+
+                            Toast.makeText(TermDetails.this, "Cannot delete term with associated courses.", Toast.LENGTH_SHORT).show();
+                        } else {
+
+                            Terms termToDelete = new Terms(termId, termTitle, termStart, termEnd);
+                            repository.delete(termToDelete);
+
+
+                            Intent intent = new Intent(TermDetails.this, TermList.class);
+                            startActivity(intent);
+                        }
+                    }
+                });
+            }
+        });
+        LinearLayout buttonContainer = findViewById(R.id.linearLayoutTermDisplayVertical);
+        buttonContainer.addView(deleteTermButton);
+    }
 }

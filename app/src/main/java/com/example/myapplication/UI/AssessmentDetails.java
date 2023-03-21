@@ -1,6 +1,7 @@
 package com.example.myapplication.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import com.example.myapplication.Database.Repository;
 import com.example.myapplication.R;
 import com.example.myapplication.entities.AssessmentsEntity;
+import com.example.myapplication.entities.Courses;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +83,23 @@ public class AssessmentDetails extends AppCompatActivity {
                 finish();
             }
         });
+        Button deleteAssessmentsButton = findViewById(R.id.deleteAssessentsButton);
+        deleteAssessmentsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                repository.getAssessmentsByAssessmentId(assessmentId).observe(AssessmentDetails.this, new Observer<List<AssessmentsEntity>>() {
+                    @Override
+                    public void onChanged(List<AssessmentsEntity> assessmentsEntities) {
+                        if (assessmentsEntities != null && !assessmentsEntities.isEmpty()) {
+                            AssessmentsEntity assessmentToDelete = assessmentsEntities.get(0);
+                            repository.delete(assessmentToDelete);
+                            finish();
+                        }
+                    }
+                });
+            }
+        });
+
 
     }
 

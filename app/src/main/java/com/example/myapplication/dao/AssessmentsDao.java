@@ -25,6 +25,8 @@ public interface AssessmentsDao {
     LiveData<List<AssessmentsEntity>> getAllAssessments();
     @Query("SELECT * FROM assessments WHERE courseId = :courseId")
     LiveData<List<AssessmentsEntity>> getAssessmentsByCourseId(int courseId);
+    @Query("SELECT * FROM assessments WHERE assessmentId = :assessmentId")
+    LiveData<List<AssessmentsEntity>> getAssessmentsByAssessmentId(int assessmentId);
 
 
 }

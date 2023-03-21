@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.entities.AssessmentsEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.AssessmentListViewHolder> {
@@ -20,10 +21,11 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.As
         void onItemClick(AssessmentsEntity assessment);
     }
 
-    private List<AssessmentsEntity> mAssessments;
+    //private List<AssessmentsEntity> mAssessments;
     private final Context context;
     private final LayoutInflater mInflater;
     private final OnItemClickListener mListener;
+    private List<AssessmentsEntity> mAssessments = new ArrayList<>();
 
     public AssessmentAdapter(Context context, OnItemClickListener onItemClickListener) {
         mInflater = LayoutInflater.from(context);
@@ -60,8 +62,11 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.As
     }
 
     public void setAssessments(List<AssessmentsEntity> assessments) {
-        mAssessments = assessments;
-        notifyDataSetChanged();
+        if(assessments != null) {
+            mAssessments .clear();
+            mAssessments.addAll(assessments);
+            notifyDataSetChanged();
+        }
     }
 
     public class AssessmentListViewHolder extends RecyclerView.ViewHolder {

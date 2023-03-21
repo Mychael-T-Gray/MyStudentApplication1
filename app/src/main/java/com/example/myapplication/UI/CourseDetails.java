@@ -1,5 +1,6 @@
 package com.example.myapplication.UI;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ import com.example.myapplication.entities.AssessmentsEntity;
 import com.example.myapplication.entities.Courses;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -32,6 +34,7 @@ public class CourseDetails extends AppCompatActivity {
 
     private int courseId;
     private int termId;
+    private int assessmentId;
     private String courseTitle;
     private String courseStart;
     private String courseEnd;
@@ -42,7 +45,7 @@ public class CourseDetails extends AppCompatActivity {
 
     private Repository repository;
     AssessmentsEntity assessmentsEntity;
-    AssessmentAdapter assessmentAdapter;
+    AssessmentAdapter mAdapter;
     private List<AssessmentsEntity> mAssessments = new ArrayList<>();
 
     @Override
@@ -88,12 +91,17 @@ public class CourseDetails extends AppCompatActivity {
                 String name = editInstructorName.getText().toString().trim();
                 String phoneNumber = editInstructorPhoneNumber.getText().toString().trim();
                 String email = editInstructorEmail.getText().toString().trim();
+                List<String> allowedProgressValues = Arrays.asList("in progress", "completed", "dropped", "plan to take");
 
                 if (title.isEmpty() || start.isEmpty() || end.isEmpty() || progress.isEmpty() || name.isEmpty() || phoneNumber.isEmpty() || email.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Please enter all fields", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                if (!allowedProgressValues.contains(progress.toLowerCase())) {
+                    Toast.makeText(getApplicationContext(), "Please enter one of these options (in progress, completed, dropped, plan to take)", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (courseId == -1) {
                     Courses course = new Courses( title, start, end, progress, name, phoneNumber, email, termId);
                     repository.insert(course);
@@ -144,7 +152,9 @@ public class CourseDetails extends AppCompatActivity {
         repository.getAssessmentsByCourseId(courseId).observe(this, new Observer<List<AssessmentsEntity>>() {
             @Override
             public void onChanged(List<AssessmentsEntity> assessmentsEntities) {
-                assessmentAdapter.setAssessments(assessmentsEntities);
+                if (assessmentsEntities != null) {
+                    assessmentAdapter.setAssessments(assessmentsEntities);
+                }
             }
         });
 
@@ -155,8 +165,9 @@ public class CourseDetails extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(CourseDetails.this, AssessmentDetails.class);
-            intent.putExtra("termId", termId);
+
             intent.putExtra("courseId", courseId);
+            intent.putExtra("assessmentId", assessmentId);
             startActivity(intent);
         }
     });

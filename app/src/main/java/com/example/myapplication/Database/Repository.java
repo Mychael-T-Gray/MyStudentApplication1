@@ -100,7 +100,9 @@ public class Repository {
     public LiveData<List<AssessmentsEntity>> getAssessmentsByCourseId(int courseId) {
         return mAssessmentsDao.getAssessmentsByCourseId(courseId);
     }
-
+    public LiveData<List<AssessmentsEntity>> getAssessmentsByAssessmentId(int assessmentId) {
+        return mAssessmentsDao.getAssessmentsByAssessmentId(assessmentId);
+    }
     public void insert(AssessmentsEntity assessmentsEntity) {
         dataBaseExecutor.execute(() -> {
             mAssessmentsDao.insert(assessmentsEntity);

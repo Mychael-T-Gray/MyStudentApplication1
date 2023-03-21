@@ -93,10 +93,10 @@
                 android:text="Save Assessment" />
 
             <Button
-                android:id="@+id/deleteAssessentButton"
+                android:id="@+id/deleteAssessentsButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="Delete Assessment" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
