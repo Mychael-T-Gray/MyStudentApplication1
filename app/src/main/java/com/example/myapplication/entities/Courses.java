@@ -3,20 +3,22 @@ package com.example.myapplication.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Date;
+
 @Entity(tableName = "COURSES")
 public class Courses {
     @PrimaryKey(autoGenerate = true)
     private int courseId;
     private String courseTitle;
-    private String courseStartDate;
-    private String courseEndDate;
+    private Date courseStartDate;
+    private Date courseEndDate;
     private String courseProgress;
     private String instructorName;
     private String instructorPhoneNumber;
     private String instructorEmail;
     private int termId;
 
-    public Courses( String courseTitle, String courseStartDate, String courseEndDate, String courseProgress, String instructorName, String instructorPhoneNumber, String instructorEmail, int termId) {
+    public Courses( String courseTitle, Date courseStartDate, Date courseEndDate, String courseProgress, String instructorName, String instructorPhoneNumber, String instructorEmail, int termId) {
 
         this.courseTitle = courseTitle;
         this.courseStartDate = courseStartDate;
@@ -27,7 +29,7 @@ public class Courses {
         this.instructorEmail = instructorEmail;
         this.termId = termId;
     }
-    public Courses(int courseId, String courseTitle, String courseStartDate, String courseEndDate, String courseProgress, String instructorName, String instructorPhoneNumber, String instructorEmail, int termId) {
+    public Courses(int courseId, String courseTitle, Date courseStartDate, Date courseEndDate, String courseProgress, String instructorName, String instructorPhoneNumber, String instructorEmail, int termId) {
         this.courseId = courseId;
         this.courseTitle = courseTitle;
         this.courseStartDate = courseStartDate;
@@ -66,19 +68,19 @@ public class Courses {
         this.courseTitle = courseTitle;
     }
 
-    public String getCourseStartDate() {
+    public Date getCourseStartDate() {
         return courseStartDate;
     }
 
-    public void setCourseStartDate(String courseStartDate) {
+    public void setCourseStartDate(Date courseStartDate) {
         this.courseStartDate = courseStartDate;
     }
 
-    public String getCourseEndDate() {
+    public Date getCourseEndDate() {
         return courseEndDate;
     }
 
-    public void setCourseEndDate(String courseEndDate) {
+    public void setCourseEndDate(Date courseEndDate) {
         this.courseEndDate = courseEndDate;
     }
 

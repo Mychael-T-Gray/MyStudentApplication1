@@ -67,8 +67,13 @@ public class TermDetails extends AppCompatActivity {
                 Intent intent = new Intent(TermDetails.this, CourseDetails.class);
                 intent.putExtra("courseId", course.getCourseId());
                 intent.putExtra("courseTitle", course.getCourseTitle());
-                intent.putExtra("courseStartDate", course.getCourseStartDate());
-                intent.putExtra("courseEndDate", course.getCourseEndDate());
+                //intent.putExtra("courseStartDate", course.getCourseStartDate());
+                long courseStartDateAsLong = course.getCourseStartDate().getTime();
+                intent.putExtra("courseStartDate", courseStartDateAsLong);
+               // intent.putExtra("courseEndDate", course.getCourseEndDate());
+
+                long courseEndDateAsLong = course.getCourseEndDate().getTime();
+                intent.putExtra("courseEndDate", courseEndDateAsLong);
                 intent.putExtra("courseProgress", course.getCourseProgress());
                 intent.putExtra("instructorName", course.getInstructorName());
                 intent.putExtra("instructorPhoneNumber", course.getInstructorPhoneNumber());

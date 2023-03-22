@@ -248,6 +248,13 @@
             android:layout_height="wrap_content"
             android:text="Save Course Notes" />
 
+        <Button
+            android:id="@+id/setCourseAlert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Course Alert" />
+
+
 
     </LinearLayout>
 

@@ -12,10 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.entities.Courses;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseListViewHolder> {
     // Define an interface to handle clicks on list items
     public interface OnItemClickListener {
+
         void onItemClick(Courses course);
     }
 
@@ -43,15 +48,18 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseList
     public void onBindViewHolder(@NonNull CourseListViewHolder holder, int position) {
         if (mCourses != null) {
             Courses current = mCourses.get(position);
-
+            SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH-mm", Locale.getDefault());
             String courseTitle = current.getCourseTitle();
-            String courseStart = current.getCourseStartDate();
-            String courseEnd = current.getCourseEndDate();
+            Date courseStart = current.getCourseStartDate();
+            String formattedCourseStartDate = dateFormatter.format(courseStart);
+            Date courseEnd = current.getCourseEndDate();
+            String formattedCourseEnd = dateFormatter.format(courseEnd);
+
             String courseProgress = current.getCourseProgress();
             String instructorName = current.getInstructorName();
             String instructorPhoneNumber = current.getInstructorPhoneNumber();
             String instructorEmail = current.getInstructorEmail();
-            String displayText = courseTitle + " - " + courseStart + " to " + courseEnd + " progress =" +
+            String displayText = courseTitle + " - " + formattedCourseStartDate + " to " + formattedCourseEnd + " progress =" +
                     courseProgress + " Instructor Name = " + instructorName + " Phone Number = " + instructorPhoneNumber +
                     " Email = " + instructorEmail;
 
