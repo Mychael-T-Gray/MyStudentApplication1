@@ -78,12 +78,12 @@ public class CourseDetails extends AppCompatActivity {
         courseId = getIntent().getIntExtra("courseId", -1);
         termId = getIntent().getIntExtra("termId", -1);
         courseTitle = getIntent().getStringExtra("courseTitle");
-        // courseStart = getIntent().getStringExtra("courseStartDate");
+
         long courseStartDateAsLong = getIntent().getLongExtra("courseStartDate", -1);
         if (courseStartDateAsLong != -1) {
             courseStart = new Date(courseStartDateAsLong);
         }
-        // courseEnd = getIntent().getStringExtra("courseEndDate");
+
         long courseEndDateAsLong = getIntent().getLongExtra("courseEndDate", -1);
         if (courseEndDateAsLong != -1) {
             courseEnd = new Date(courseEndDateAsLong);
@@ -93,15 +93,15 @@ public class CourseDetails extends AppCompatActivity {
         instructorPhoneNumber = getIntent().getStringExtra("instructorPhoneNumber");
         instructorEmail = getIntent().getStringExtra("instructorEmail");
 
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH-ss", Locale.getDefault());
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH-mm", Locale.getDefault());
 
         editCourseTitle.setText(courseTitle);
-        // editCourseStart.setText(courseStart);
+
         if (courseStart != null) {
             String courseStartFormatted = dateFormatter.format(courseStart);
             editCourseStart.setText(courseStartFormatted);
         }
-        // editCourseEnd.setText(courseEnd);
+
         if (courseEnd != null) {
             String courseEndFormatted = dateFormatter.format(courseEnd);
             editCourseEnd.setText(courseEndFormatted);
@@ -112,6 +112,7 @@ public class CourseDetails extends AppCompatActivity {
         editInstructorEmail.setText(instructorEmail);
 
         repository = new Repository(getApplication());
+
 
         Button saveCourseButton = findViewById(R.id.saveCourseButton);
         saveCourseButton.setOnClickListener(new View.OnClickListener() {
@@ -137,11 +138,11 @@ public class CourseDetails extends AppCompatActivity {
                 }
 
                 try {
-                    // Parse the start and end strings back into Date objects
+
                     parsedStartDate = dateFormatter.parse(start);
                     parsedEndDate = dateFormatter.parse(end);
                 } catch (ParseException e) {
-                    // Handle the ParseException
+
                     Toast.makeText(getApplicationContext(), "Invalid date format. Please use the format: yyyy-MM-dd HH-mm", Toast.LENGTH_SHORT).show();
                 }
                 if (parsedStartDate == null || parsedEndDate == null) {
@@ -163,11 +164,12 @@ public class CourseDetails extends AppCompatActivity {
 
         });
 
+
         Button deleteCourseButton = findViewById(R.id.deleteCourseButton);
         deleteCourseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Delete the course from the database
+
                 repository.getCourseById(courseId).observe(CourseDetails.this, new Observer<Courses>() {
                     @Override
                     public void onChanged(Courses course) {
@@ -215,6 +217,7 @@ public class CourseDetails extends AppCompatActivity {
         courseNotesRecyclerView.setAdapter(courseNotesAdapter);
         courseNotesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
         Button addCourseNotes = findViewById(R.id.addCourseNotes);
         addCourseNotes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -239,6 +242,8 @@ public class CourseDetails extends AppCompatActivity {
                 }
             });
         }
+
+
         Button assessmentsButton = findViewById(R.id.goToAssesments);
         assessmentsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -248,42 +253,59 @@ public class CourseDetails extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
         Button setCourseAlertButton = findViewById(R.id.setCourseAlert);
         setCourseAlertButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setCourseAlert();
+                String updatedCourseTitle = editCourseTitle.getText().toString().trim();
+                String updatedStartDate = editCourseStart.getText().toString().trim();
+                String updatedEndDate = editCourseEnd.getText().toString().trim();
+
+                try {
+                    parsedStartDate = dateFormatter.parse(updatedStartDate);
+                    parsedEndDate = dateFormatter.parse(updatedEndDate);
+                } catch (ParseException e) {
+                    Toast.makeText(getApplicationContext(), "Invalid date format. Please use the format: yyyy-MM-dd HH-mm", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                setCourseAlert(courseId, updatedCourseTitle, parsedStartDate, parsedEndDate);
                 Toast.makeText(getApplicationContext(), "Alerts set for Start and End of course", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void setCourseAlert() {
-        if (parsedStartDate != null && parsedEndDate != null && courseTitle != null) {
-            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-            Intent startIntent = new Intent(this, CourseAlertReceiver.class);
-            startIntent.putExtra("courseId", courseId);
-            startIntent.putExtra("courseTitle", courseTitle);
-            startIntent.putExtra("alertType", "Course Start");
-            PendingIntent startPendingIntent = PendingIntent.getBroadcast(this, courseId * 2, startIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        private void setCourseAlert ( int courseId, String courseTitle, Date parsedStartDate, Date
+        parsedEndDate){
 
-            Intent endIntent = new Intent(this, CourseAlertReceiver.class);
-            endIntent.putExtra("courseId", courseId);
-            endIntent.putExtra("courseTitle", courseTitle);
-            endIntent.putExtra("alertType", "Course End");
-            PendingIntent endPendingIntent = PendingIntent.getBroadcast(this, courseId * 2 + 1, endIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            if (parsedStartDate != null && parsedEndDate != null && courseTitle != null) {
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-            if (alarmManager != null) {
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, parsedStartDate.getTime(), startPendingIntent);
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, parsedEndDate.getTime(), endPendingIntent);
+                Intent startIntent = new Intent(this, CourseAlertReceiver.class);
+                startIntent.putExtra("courseId", courseId);
+                startIntent.putExtra("courseTitle", courseTitle);
+                startIntent.putExtra("alertType", "Course Start");
+                PendingIntent startPendingIntent = PendingIntent.getBroadcast(this, courseId * 2, startIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+                Intent endIntent = new Intent(this, CourseAlertReceiver.class);
+                endIntent.putExtra("courseId", courseId);
+                endIntent.putExtra("courseTitle", courseTitle);
+                endIntent.putExtra("alertType", "Course End");
+                PendingIntent endPendingIntent = PendingIntent.getBroadcast(this, courseId * 2 + 1, endIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+                if (alarmManager != null) {
+                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, parsedStartDate.getTime(), startPendingIntent);
+                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, parsedEndDate.getTime(), endPendingIntent);
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), "Please set the start and end dates for the course", Toast.LENGTH_SHORT).show();
             }
-        } else {
-            Toast.makeText(getApplicationContext(), "Please set the start and end dates for the course", Toast.LENGTH_SHORT).show();
-        }
 
+        }
     }
-}
 
 
 

@@ -18,16 +18,14 @@ import com.example.myapplication.entities.Terms;
 
 public class MainActivity extends AppCompatActivity {
     private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Course Alert Channel";
-            String description = "Channel for course start and end alerts";
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel channel = new NotificationChannel("course_alert_channel", name, importance);
-            channel.setDescription(description);
+        CharSequence name = "Course Alert Channel";
+        String description = "Channel for course start and end alerts";
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+        NotificationChannel channel = new NotificationChannel("course_alert_channel", name, importance);
+        channel.setDescription(description);
 
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        notificationManager.createNotificationChannel(channel);
     }
 
     @Override
