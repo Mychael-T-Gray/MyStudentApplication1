@@ -23,6 +23,7 @@ import com.example.myapplication.entities.Courses;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -89,9 +90,14 @@ public class AssessmentDetails extends AppCompatActivity {
                 String title = assesmentTitle.getText().toString().trim();
                 String type = assesmentType.getText().toString().trim();
                 String endDate = assesmentEndDate.getText().toString().trim();
-
+                List<String> allowedTypeValues = Arrays.asList("performance",  "objective" );
                 if (title.isEmpty() || type.isEmpty() || endDate.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Please enter all fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!allowedTypeValues.contains(type.toLowerCase())) {
+                    Toast.makeText(getApplicationContext(), "Please enter one of these options (performance,objective )", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 try{

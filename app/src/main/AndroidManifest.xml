@@ -48,7 +48,8 @@
         </activity>
         <activity
             android:name=".UI.AssessmentDetails"
-            android:exported="false">
+            android:exported="false"
+            android:label="Assessment Details">>
 
             <meta-data
                 android:name="android.app.lib_name"
