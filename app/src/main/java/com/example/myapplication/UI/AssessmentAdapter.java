@@ -12,8 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.entities.AssessmentsEntity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.AssessmentListViewHolder> {
     // Define an interface to handle clicks on list items
@@ -44,11 +47,13 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.As
     public void onBindViewHolder(@NonNull AssessmentListViewHolder holder, int position) {
         if (mAssessments != null) {
             AssessmentsEntity current = mAssessments.get(position);
+            SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH-mm", Locale.getDefault());
 
             String assessmentTitle = current.getAssessmentTitle();
             String assessmentType = current.getAssessmentType();
-            String assessmentEndDate = current.getAssessmentEndDate();
-            String displayText = assessmentTitle + " - " + assessmentType + " - " + assessmentEndDate;
+            Date assessmentEndDate = current.getAssessmentEndDate();
+            String formatedAssessmentEndDate = dateFormatter.format(assessmentEndDate);
+            String displayText = assessmentTitle + " - " + assessmentType + " - " + formatedAssessmentEndDate;
 
             holder.assessmentItemView.setText(displayText);
         } else {

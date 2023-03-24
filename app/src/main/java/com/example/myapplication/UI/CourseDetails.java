@@ -192,7 +192,7 @@ public class CourseDetails extends AppCompatActivity {
                 intent.putExtra("assessmentId", assessment.getAssessmentId());
                 intent.putExtra("assessmentType", assessment.getAssessmentType());
                 intent.putExtra("assessmentTitle", assessment.getAssessmentTitle());
-                intent.putExtra("assessmentEndDate", assessment.getAssessmentEndDate());
+                intent.putExtra("assessmentEndDate", assessment.getAssessmentEndDate().getTime());
                 intent.putExtra("courseId", assessment.getCourseId());
                 startActivity(intent);
                 ;

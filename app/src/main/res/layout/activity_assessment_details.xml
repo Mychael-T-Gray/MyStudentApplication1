@@ -97,6 +97,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Delete Assessment" />
+            <Button
+                android:id="@+id/setAssessmentAlertButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Set Assessment Alert" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -17,7 +17,7 @@ import com.example.myapplication.entities.Courses;
 import com.example.myapplication.entities.Terms;
 
 
-@Database( entities = {AssessmentsEntity.class, Courses.class, Terms.class, CourseNotes.class}, version = 5, exportSchema = false)
+@Database( entities = {AssessmentsEntity.class, Courses.class, Terms.class, CourseNotes.class}, version = 7, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class ScheduleDatabaseBuilder extends RoomDatabase {
     public abstract TermsDao termsDao();

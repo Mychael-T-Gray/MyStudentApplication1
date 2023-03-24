@@ -81,6 +81,7 @@
                 android:value="" />
         </activity>
         <receiver android:name="com.example.myapplication.UI.CourseAlertReceiver" />
+        <receiver android:name="com.example.myapplication.UI.AssessmentAlertReceiver"/>
     </application>
 
 </manifest>

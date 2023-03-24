@@ -3,6 +3,8 @@ package com.example.myapplication.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Date;
+
 @Entity(tableName = "ASSESSMENTS")
 public class AssessmentsEntity {
     @PrimaryKey(autoGenerate = true)
@@ -10,10 +12,10 @@ public class AssessmentsEntity {
 
     private String assessmentType;
     private String assessmentTitle;
-    private String assessmentEndDate;
+    private Date assessmentEndDate;
     private int courseId;
 
-    public AssessmentsEntity( String assessmentType, String assessmentTitle, String assessmentEndDate, int courseId) {
+    public AssessmentsEntity( String assessmentType, String assessmentTitle, Date assessmentEndDate, int courseId) {
 
         this.assessmentType = assessmentType;
         this.assessmentTitle = assessmentTitle;
@@ -48,11 +50,11 @@ public class AssessmentsEntity {
         this.assessmentTitle = assessmentTitle;
     }
 
-    public String getAssessmentEndDate() {
+    public Date getAssessmentEndDate() {
         return assessmentEndDate;
     }
 
-    public void setAssessmentEndDate(String assessmentEndDate) {
+    public void setAssessmentEndDate(Date assessmentEndDate) {
         this.assessmentEndDate = assessmentEndDate;
     }
 

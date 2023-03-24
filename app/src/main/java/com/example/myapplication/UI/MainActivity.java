@@ -27,10 +27,23 @@ public class MainActivity extends AppCompatActivity {
         NotificationManager notificationManager = getSystemService(NotificationManager.class);
         notificationManager.createNotificationChannel(channel);
     }
+    private void createAssessmentNotificationChannel() {
 
+        CharSequence name = "Assessment Alert Channel";
+        String description = "Channel for assessment alerts";
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+        NotificationChannel channel = new NotificationChannel("assessment_alert_channel", name, importance);
+        channel.setDescription(description);
+
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        if (notificationManager != null) {
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         createNotificationChannel();
+        createAssessmentNotificationChannel();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button button = findViewById(R.id.mainScreenTermListButton);

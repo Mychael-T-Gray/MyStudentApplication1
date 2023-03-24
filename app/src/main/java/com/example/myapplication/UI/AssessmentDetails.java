@@ -3,10 +3,15 @@ package com.example.myapplication.UI;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -15,19 +20,25 @@ import com.example.myapplication.R;
 import com.example.myapplication.entities.AssessmentsEntity;
 import com.example.myapplication.entities.Courses;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AssessmentDetails extends AppCompatActivity {
     private EditText assesmentEndDate;
     private EditText assesmentType;
     private EditText assesmentTitle;
 
+
     private int courseId;
     private int assessmentId;
     private String assessmentTitle;
     private String assessmentType;
-    private String assessmentEndDate;
+    private Date assessmentEndDate;
+    private Date parsedAssessmentEndDate;
 
     private Repository repository;
     AssessmentsEntity assessmentsEntity;
@@ -51,14 +62,25 @@ public class AssessmentDetails extends AppCompatActivity {
         assessmentId = getIntent().getIntExtra("assessmentId", -1);
         assessmentTitle = getIntent().getStringExtra("assessmentTitle");
         assessmentType = getIntent().getStringExtra("assessmentType");
-        assessmentEndDate = getIntent().getStringExtra("assessmentEndDate");
+        long assessmentEndDateAsLong = getIntent().getLongExtra("assessmentEndDate", -1);
+        if(assessmentId != -1){
+            assessmentEndDate = new Date( assessmentEndDateAsLong);
+        }
         Log.d("AssessmentDetails", "courseId: " + courseId + ", assessmentId: " + assessmentId);
 
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH-mm", Locale.getDefault());
 
         assesmentTitle.setText(assessmentTitle);
         assesmentType.setText(assessmentType);
-        assesmentEndDate.setText(assessmentEndDate);
+        if (assessmentEndDate != null){
+            String assessmentEndDateFormatted = dateFormatter.format(assessmentEndDate);
+            assesmentEndDate.setText(assessmentEndDateFormatted);
+        }
+
         repository = new Repository(getApplication());
+
+
+
 
         Button saveAssessmentButton = findViewById(R.id.saveAssessmentButton);
         saveAssessmentButton.setOnClickListener(new View.OnClickListener() {
@@ -72,17 +94,25 @@ public class AssessmentDetails extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Please enter all fields", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                try{
+                    parsedAssessmentEndDate = dateFormatter.parse(endDate);
+                } catch (ParseException e){
+                    Toast.makeText(getApplicationContext(), "Invalid date format. Please use the format: yyyy-MM-dd HH-mm", Toast.LENGTH_SHORT).show();
+                }
 
+                if(parsedAssessmentEndDate == null){
+                    Toast.makeText(getApplicationContext(), "Invalid date format. Please use the format: yyyy-MM-dd HH-mm", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (assessmentId == -1) {
-                    AssessmentsEntity assessment = new AssessmentsEntity(type, title, endDate, courseId);
+                    AssessmentsEntity assessment = new AssessmentsEntity(type, title,  parsedAssessmentEndDate, courseId);
                     repository.insert(assessment);
                 } else {
-                    AssessmentsEntity assessment = new AssessmentsEntity(type, title, endDate, courseId);
+                    AssessmentsEntity assessment = new AssessmentsEntity(type, title,  parsedAssessmentEndDate, courseId);
                     assessment.setAssessmentId(assessmentId);
                     repository.update(assessment);
                 }
-
-                finish();
+          finish();
             }
         });
         Button deleteAssessmentsButton = findViewById(R.id.deleteAssessentsButton);
@@ -101,8 +131,49 @@ public class AssessmentDetails extends AppCompatActivity {
                 });
             }
         });
+        Button setAssessmentAlertButton = findViewById(R.id.setAssessmentAlertButton);
+        setAssessmentAlertButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                EditText editAssessmentTitle = findViewById(R.id.assesmentTitle);
+                EditText editAssessmentEnd = findViewById(R.id.assesmentEndDate);
+
+                String updatedAssessmentTitle = editAssessmentTitle.getText().toString().trim();
+                String updatedAssessmentEndDate = editAssessmentEnd.getText().toString().trim();
+
+                assessmentTitle = updatedAssessmentTitle;
+                try {
+                   parsedAssessmentEndDate = dateFormatter.parse(updatedAssessmentEndDate);
+
+                } catch (ParseException e) {
+                    Toast.makeText(getApplicationContext(), "Invalid date format. Please use the format: yyyy-MM-dd HH-mm", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                setAssessmentAlert(assessmentId, updatedAssessmentTitle, parsedAssessmentEndDate);
+                Toast.makeText(getApplicationContext(), "Alert set for end of assessment", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
+    }
+
+    private void setAssessmentAlert(int assessmentId, String assessmentTitle, Date parsedAssessmentEndDate) {
+        if ( parsedAssessmentEndDate != null && assessmentTitle != null) {
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+            Intent endIntent = new Intent(this, AssessmentAlertReceiver.class);
+            endIntent.putExtra("assessmentId", assessmentId);
+            endIntent.putExtra("assessmentTitle", assessmentTitle);
+            endIntent.putExtra("assessmentAlertType", "Assessment End");
+            PendingIntent endPendingIntent = PendingIntent.getBroadcast(this, assessmentId, endIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+            if (alarmManager != null) {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, parsedAssessmentEndDate.getTime(), endPendingIntent);
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "Please set the end date for the assessment", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
