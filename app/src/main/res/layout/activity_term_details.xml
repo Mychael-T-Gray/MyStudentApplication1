@@ -12,20 +12,6 @@
     tools:context=".UI.TermDetails">
 
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/termListFloatingActionButton"
-        android:layout_width="58dp"
-        android:layout_height="162dp"
-        android:clickable="true"
-        android:src="@android:drawable/ic_menu_add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.915"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.949"
-        tools:ignore="SpeakableTextPresentCheck" />
-
 
         <LinearLayout
             android:id="@+id/linearLayoutTermDisplayVertical"
@@ -86,9 +72,9 @@
 
                 <EditText
                     android:id="@+id/termDetailsTermStartDateEditText"
-                    android:layout_width="193dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Term Start Date"
+                    android:hint="YYYY-MM-dd"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -114,7 +100,7 @@
                     android:id="@+id/termDetailsTermEndDateEditText"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Term Start Date"
+                    android:hint="YYYY-MM-dd"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
