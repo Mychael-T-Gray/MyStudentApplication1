@@ -81,7 +81,7 @@ public class CourseNotesAdapter extends RecyclerView.Adapter<CourseNotesAdapter.
     private void sendEmail(CourseNotes note) {
         Context context = mContext;
 
-        // Create a dialog to input the email address
+
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Enter the email address");
 
@@ -90,7 +90,7 @@ public class CourseNotesAdapter extends RecyclerView.Adapter<CourseNotesAdapter.
         builder.setView(input);
         builder.setMessage(note.getNoteText());
 
-        // Set up the buttons
+
         builder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -100,13 +100,13 @@ public class CourseNotesAdapter extends RecyclerView.Adapter<CourseNotesAdapter.
                     return;
                 }
 
-                // Create email intent
+
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
                 emailIntent.setData(Uri.parse("mailto:" + email));
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Course Notes");
                 emailIntent.putExtra(Intent.EXTRA_TEXT, note.getNoteText());
 
-                // Check if an email app is available to handle the intent
+
                 if (emailIntent.resolveActivity(context.getPackageManager()) != null) {
                     context.startActivity(emailIntent);
                 } else {

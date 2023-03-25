@@ -30,22 +30,9 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity
-            android:name=".UI.AssessmentAdapter"
-            android:exported="false"
-            android:label="Assessment Adapter">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
 
-        <activity
-            android:name=".UI.AssessmentList"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+
+
         <activity
             android:name=".UI.AssessmentDetails"
             android:exported="false"

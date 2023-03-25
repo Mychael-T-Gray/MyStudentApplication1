@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseListViewHolder> {
-    // Define an interface to handle clicks on list items
+
     public interface OnItemClickListener {
 
         void onItemClick(Courses course);

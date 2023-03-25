@@ -19,12 +19,12 @@ import java.util.List;
 import java.util.Locale;
 
 public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.AssessmentListViewHolder> {
-    // Define an interface to handle clicks on list items
+
     public interface OnItemClickListener {
         void onItemClick(AssessmentsEntity assessment);
     }
 
-    //private List<AssessmentsEntity> mAssessments;
+
     private final Context context;
     private final LayoutInflater mInflater;
     private final OnItemClickListener mListener;
