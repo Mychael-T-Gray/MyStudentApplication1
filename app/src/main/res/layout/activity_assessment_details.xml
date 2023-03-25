@@ -36,7 +36,7 @@
                     android:id="@+id/assesmentEndDate"
                     android:layout_width="228dp"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Assessment End Date"
+                    android:hint="YYYY-MM-dd HH-mm"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -58,7 +58,7 @@
                     android:id="@+id/assesmentType"
                     android:layout_width="228dp"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Assessment Type"
+                    android:hint="Performance or Objective"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

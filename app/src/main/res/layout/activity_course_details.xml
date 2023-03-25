@@ -73,7 +73,7 @@
                 android:id="@+id/courseDetailsCourseStartDate"
                 android:layout_width="193dp"
                 android:layout_height="wrap_content"
-                android:hint="Enter Course Start Date"
+                android:hint="YYYY-MM-dd HH-mm"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -99,7 +99,7 @@
                 android:id="@+id/courseDetailsCourseEndDateEditText"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:hint="Enter Course End Date"
+                android:hint="YYYY-MM-dd HH-mm"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -255,7 +255,6 @@
             android:text="Add Course Alert" />
 
 
-
     </LinearLayout>
 
     <EditText
@@ -288,7 +287,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutCourseDisplayVertical"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.647" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="147dp"
+        android:textSize="20sp"
+        android:text="Assessment List"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/courseNotesRecyclerView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
