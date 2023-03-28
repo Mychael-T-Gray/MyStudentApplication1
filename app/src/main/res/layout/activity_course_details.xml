@@ -249,10 +249,15 @@
             android:text="Save Course Notes" />
 
         <Button
-            android:id="@+id/setCourseAlert"
+            android:id="@+id/setCourseAlertStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Course Alert" />
+            android:text="Add Course Start Alert" />
+        <Button
+            android:id="@+id/setCourseAlertEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Course End Alert" />
 
 
     </LinearLayout>
